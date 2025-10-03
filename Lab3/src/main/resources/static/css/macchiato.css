@@ -1,0 +1,85 @@
+:root {
+    --bg: #24273A;
+    --card-bg: #2B2F45;
+    --text: #CAD3F5;
+    --muted: #A5ADCB;
+    --primary: #8AADF4;
+    --input-bg: #1E2030;
+    --border: #494D64;
+    --focus: rgba(138, 173, 244, .35);
+    --btn-bg: var(--primary);
+    --btn-text: #181926
+}
+
+html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text)
+}
+
+.login-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1rem
+}
+
+.form-label {
+    color: var(--muted);
+    font-weight: 500
+}
+
+.form-control {
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: .75rem;
+    color: var(--text)
+}
+
+.form-control:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 .25rem var(--focus);
+    background: var(--input-bg);
+    color: var(--text)
+}
+
+.btn-primary {
+    background: var(--btn-bg);
+    border: none;
+    color: var(--btn-text);
+    border-radius: .75rem
+}
+
+.btn-primary:hover {
+    filter: brightness(.95);
+    color: var(--btn-text)
+}
+
+.alert {
+    border-radius: .75rem
+}
+
+.card-narrow {
+    max-width: 420px;
+    width: 100%
+}
+
+.card-wide {
+    max-width: 520px;
+    width: 100%
+}
+
+.link-light {
+    color: var(--primary) !important;
+    text-decoration: none
+}
+
+.link-light:hover {
+    text-decoration: underline
+}
+
+.surface-panel {
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: .75rem;
+    background: var(--input-bg)
+}
