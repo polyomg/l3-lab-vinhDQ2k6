@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Metadata and dynamic page title bound via Thymeleaf; fallback used when no model value provided -->
+    <meta charset="UTF-8">
+    <title th:text="${title}">Welcome</title>
+</head>
+<body>
+<!-- Main heading content provided by controller through 'subject' model attribute -->
+<h1 th:text="${subject}">Hello world!</h1>
+</body>
+</html>
