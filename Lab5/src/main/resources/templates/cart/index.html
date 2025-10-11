@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+</head>
+<body>
+<table border="1" style="width:100%">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Amount</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${cart.items}">
+        <td th:text="${item.id}">1</td>
+        <td th:text="${item.name}">Sample</td>
+        <td th:text="${item.price}">0.00</td>
+        <td>
+            <form method="post" th:action="@{|/cart/update/${item.id}|}">
+                <input min="0" name="qty" onchange="this.form.submit()" th:value="${item.qty}" type="number"/>
+            </form>
+        </td>
+        <td th:text="${item.price * item.qty}">0.00</td>
+        <td>
+            <a th:href="@{|/cart/remove/${item.id}|}">Remove</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p>
+    <strong>Total items:</strong> <span th:text="${cart.count}">0</span>
+    &nbsp;|&nbsp;
+    <strong>Total amount:</strong> <span th:text="${cart.amount}">0.00</span>
+</p>
+<p>
+    <a href="/cart/clear">Clear Cart</a>
+    &nbsp;|&nbsp;
+    <a href="/item/index">Add more</a>
+</p>
+</body>
+</html>

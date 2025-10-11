@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html th:fragment="view(title, content)">
+<head>
+    <meta charset="UTF-8">
+    <title th:replace="${title}">Title</title>
+</head>
+<body>
+<header><h1 th:text="#{header.name}">Online Shopping</h1></header>
+<nav th:replace="~{/FragmentsHolder/menu}"></nav>
+<article th:replace="${content}">Content</article>
+<footer>
+    <hr/>
+    <th:block th:text="#{footer.copyright}">
+        Nothing here
+    </th:block>
+</footer>
+</body>
+</html>
