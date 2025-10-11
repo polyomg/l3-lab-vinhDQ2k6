@@ -33,6 +33,7 @@ public class Staff {
     private Date dob;
 
     @Min(value = 100, message = "Lương phải >= 100")
+    @Digits(message = "Lương không đúng định dạng", integer = 10, fraction = 2)
     @NotNull(message = "Lương không được để trống")
     private Double salary;
 

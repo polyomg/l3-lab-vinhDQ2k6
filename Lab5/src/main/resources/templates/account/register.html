@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng ký</title>
+</head>
+<body>
+<h2>Đăng ký tài khoản</h2>
+<form action="/account/register" enctype="multipart/form-data" method="post">
+    <div>
+        <label>Tên đăng nhập:</label>
+        <input name="username" th:value="${username}">
+    </div>
+    <div>
+        <label>Mật khẩu:</label>
+        <input name="password" type="password">
+    </div>
+    <div>
+        <label>Hình đại diện:</label>
+        <input accept="image/*" name="photo" type="file">
+    </div>
+    <button type="submit">Đăng ký</button>
+</form>
+
+<div th:if="${message}">
+    <p th:text="${message}"></p>
+</div>
+
+<div th:if="${saved}">
+    <p>Đã lưu: <span th:text="${photoName}"></span></p>
+    <img alt="Preview" style="max-width: 240px; height: auto;" th:src="${photoUrl}">
+</div>
+</body>
+</html>
