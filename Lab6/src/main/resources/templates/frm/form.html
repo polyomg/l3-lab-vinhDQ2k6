@@ -1,0 +1,16 @@
+<form action="/lab6/category/index" method="post" th:object="${item}">
+    <fieldset class="grid">
+        <label>
+            <input placeholder="Category Id?" th:field="*{id}"/>
+        </label>
+        <label>
+            <input placeholder="Category Name?" th:field="*{name}"/>
+        </label>
+    </fieldset>
+    <fieldset class="grid">
+        <button formaction="/lab6/category/create">Create</button>
+        <button formaction="/lab6/category/update">Update</button>
+        <button th:formaction="@{|/lab6/category/delete/${item.id}|}">Delete</button>
+        <button formaction="/lab6/category/index">Reset</button>
+    </fieldset>
+</form>

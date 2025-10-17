@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagination</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+            rel="stylesheet"
+    >
+</head>
+<body>
+<main>
+    <div class="container">
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="index: ${page.content}">
+                <td th:text="${index.id}"></td>
+                <td th:text="${index.name}"></td>
+                <td th:text="${index.price}"></td>
+                <td th:text="${index.createDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <form method="get" style="display:inline" th:action="@{/lab6/product/page}">
+            <fieldset class="grid">
+                <button name="page" th:disabled="${page.number == 0}" type="submit" value="0">First</button>
+                <button name="page" th:disabled="${page.number == 0}" th:value="${page.number - 1}" type="submit">
+                    Previous
+                </button>
+                <button name="page" th:disabled="${!page.hasNext()}" th:value="${page.number + 1}" type="submit">Next
+                </button>
+                <button name="page" th:disabled="${page.number == page.totalPages - 1}"
+                        th:value="${page.totalPages - 1}"
+                        type="submit">Last
+                </button>
+                <input name="size" th:value="${page.size}" type="hidden"/>
+            </fieldset>
+        </form>
+    </div>
+    <article class="container">
+        <ul>
+            <li>Current Page: <span th:text="${page.number + 1}"></span> / <span th:text="${page.totalPages}"></span>
+            </li>
+            <li>Current Items: <span th:text="${page.numberOfElements}"></span></li>
+            <li>Total Items: <span th:text="${page.totalElements}"></span></li>
+            <li>Items Per Page: <span th:text="${page.size}"></span></li>
+        </ul>
+    </article>
+</main>
+</body>
+</html>

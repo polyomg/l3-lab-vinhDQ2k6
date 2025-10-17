@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Sorting</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+            rel="stylesheet"
+    >
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>Sorting by
+            <span th:text="${param.field} ?: 'nothing'">nothing</span>
+        </h1>
+    </div>
+</header>
+<main>
+    <div class="container">
+        <table>
+            <thead>
+            <tr>
+                <th><a href="/lab6/product/sort?field=id">Id</a></th>
+                <th><a href="/lab6/product/sort?field=name">Name</a></th>
+                <th><a href="/lab6/product/sort?field=price">Price</a></th>
+                <th><a href="/lab6/product/sort?field=createDate">Date</a></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="index: ${items}">
+                <td th:text="${index.id}"></td>
+                <td th:text="${index.name}"></td>
+                <td th:text="${index.price}"></td>
+                <td th:text="${index.createDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>
