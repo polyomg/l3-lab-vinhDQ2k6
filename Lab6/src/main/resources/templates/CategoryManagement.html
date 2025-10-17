@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Category Management</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+            rel="stylesheet"
+    >
+</head>
+<body>
+<main>
+    <div class="container">
+        <th:block th:replace="~{frm/form}"></th:block>
+    </div>
+    <hr>
+    <div class="container">
+        <th:block th:replace="~{frm/table}"></th:block>
+    </div>
+</main>
+</body>
+</html>
