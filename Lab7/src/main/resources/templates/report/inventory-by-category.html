@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory by Category</title>
+</head>
+<body>
+<table border="1" style="width:100%">
+    <thead>
+    <tr>
+        <th>Loại hàng</th>
+        <th>Tổng giá</th>
+        <th>Số sản phẩm</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- iterate items correctly -->
+    <tr th:each="item : ${items}">
+        <td th:text="${item.group}"></td>
+        <td th:text="${item.sum}"></td>
+        <td th:text="${item.count}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

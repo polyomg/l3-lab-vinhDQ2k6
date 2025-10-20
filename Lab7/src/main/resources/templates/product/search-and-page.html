@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Search and Page</title>
+</head>
+<body>
+<form method="get" th:action="@{/product/search-and-page}">
+    <input name="keywords" placeholder="Keywords" th:value="${session.keywords}" type="text">
+    <button type="submit">Search</button>
+</form>
+
+<table border="1" style="width:100%">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${page == null or #lists.isEmpty(page.content)}">
+        <td colspan="4">No products found.</td>
+    </tr>
+    <tr th:each="item : ${page.content}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.name}"></td>
+        <td th:text="${item.price}"></td>
+        <td th:text="${item.categoryName}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div>
+    <a th:href="@{/product/search-and-page(p=0, keywords=${session.keywords})}"
+       th:if="${page != null and !page.first}">First</a>
+    <a th:href="@{/product/search-and-page(p=${page.number - 1}, keywords=${session.keywords})}"
+       th:if="${page != null and page.hasPrevious()}">Previous</a>
+    <span th:if="${page != null}">
+        Page <span th:text="${page.number + 1}"></span> / <span th:text="${page.totalPages}"></span>
+    </span>
+    <a th:href="@{/product/search-and-page(p=${page.number + 1}, keywords=${session.keywords})}"
+       th:if="${page != null and page.hasNext()}">Next</a>
+    <a th:href="@{/product/search-and-page(p=${page.totalPages - 1}, keywords=${session.keywords})}"
+       th:if="${page != null and !page.last}">Last</a>
+</div>
+
+<ul>
+    <li>Số thực thể hiện tại: <span th:text="${page.numberOfElements}"></span></li>
+    <li>Trang số: <span th:text="${page.number}"></span></li>
+    <li>Kích thước trang: <span th:text="${page.size}"></span></li>
+    <li>Tổng số thực thể: <span th:text="${page.totalElements}"></span></li>
+    <li>Tổng số trang: <span th:text="${page.totalPages}"></span></li>
+</ul>
+</body>
+</html>
