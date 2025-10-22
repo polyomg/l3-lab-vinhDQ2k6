@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Access History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button, a button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .btn-back {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-logout {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-logout:hover {
+            background-color: #c82333;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Access History</h2>
+
+    <div class="button-group">
+        <a href="/mail/form">
+            <button class="btn-back">Back to Mail</button>
+        </a>
+        <a href="/auth/logout">
+            <button class="btn-logout">Logout</button>
+        </a>
+    </div>
+
+    <table th:if="${accessLogs != null && !accessLogs.isEmpty()}">
+        <thead>
+        <tr>
+            <th>URI</th>
+            <th>Timestamp</th>
+            <th>Username</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="log : ${accessLogs}">
+            <td th:text="${log.uri}"></td>
+            <td th:text="${#temporals.format(log.timestamp, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${log.username}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="no-data" th:if="${accessLogs == null || accessLogs.isEmpty()}">
+        No access history available yet.
+    </div>
+</div>
+</body>
+</html>

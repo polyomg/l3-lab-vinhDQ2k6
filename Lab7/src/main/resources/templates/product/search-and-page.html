@@ -23,7 +23,8 @@
     <tr th:if="${page == null or #lists.isEmpty(page.content)}">
         <td colspan="4">No products found.</td>
     </tr>
-    <tr th:each="item : ${page.content}">
+    <tr th:each="item, stat : ${page.content}">
+        <td th:text="${stat.index + 1}"></td>
         <td th:text="${item.id}"></td>
         <td th:text="${item.name}"></td>
         <td th:text="${item.price}"></td>
