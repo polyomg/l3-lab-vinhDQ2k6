@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Send Mail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .btn-send {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-send:hover {
+            background-color: #218838;
+        }
+
+        .btn-queue {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-queue:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-logout {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-logout:hover {
+            background-color: #c82333;
+        }
+
+        .btn-history {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-history:hover {
+            background-color: #5a6268;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .user-info {
+            color: #666;
+        }
+
+        .small-text {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        #result.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        #result.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h2 style="margin: 0;">Mail Sending System</h2>
+        <div>
+            <span class="user-info">Welcome, <span th:text="${session.user?.fullname}">User</span></span>
+            <a href="/auth/logout">
+                <button class="btn-logout" style="margin-left: 10px;">Logout</button>
+            </a>
+            <a href="/access-history">
+                <button class="btn-history" style="margin-left: 10px;">Access History</button>
+            </a>
+        </div>
+    </div>
+
+    <form id="mailForm">
+        <div class="form-group">
+            <label for="from">From (Email):</label>
+            <input id="from" name="from" required type="email">
+            <div class="small-text">Your email address</div>
+        </div>
+
+        <div class="form-group">
+            <label for="to">To (Email):</label>
+            <input id="to" name="to" required type="email">
+            <div class="small-text">Recipient email address</div>
+        </div>
+
+        <div class="form-group">
+            <label for="cc">CC (Optional):</label>
+            <input id="cc" name="cc" type="text">
+            <div class="small-text">Carbon copy email addresses (comma separated)</div>
+        </div>
+
+        <div class="form-group">
+            <label for="bcc">BCC (Optional):</label>
+            <input id="bcc" name="bcc" type="text">
+            <div class="small-text">Blind carbon copy email addresses (comma separated)</div>
+        </div>
+
+        <div class="form-group">
+            <label for="subject">Subject:</label>
+            <input id="subject" name="subject" required type="text">
+        </div>
+
+        <div class="form-group">
+            <label for="body">Message Body:</label>
+            <textarea id="body" name="body" required></textarea>
+            <div class="small-text">HTML is supported</div>
+        </div>
+
+        <div class="form-group">
+            <label for="filenames">Attachments (Optional):</label>
+            <input id="filenames" name="filenames" type="text">
+            <div class="small-text">File paths separated by comma or semicolon</div>
+        </div>
+
+        <div class="button-group">
+            <button class="btn-send" onclick="sendMail('send')" type="button">Send Immediately</button>
+            <button class="btn-queue" onclick="sendMail('push')" type="button">Add to Queue</button>
+        </div>
+    </form>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function sendMail(action) {
+        const form = document.getElementById('mailForm');
+        const formData = new FormData(form);
+        const resultDiv = document.getElementById('result');
+
+        fetch('/mail/' + action, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.text())
+            .then(data => {
+                resultDiv.textContent = data;
+                resultDiv.className = data.includes('Lỗi') ? 'error' : 'success';
+                resultDiv.style.display = 'block';
+
+                if (!data.includes('Lỗi')) {
+                    form.reset();
+                }
+
+                setTimeout(() => {
+                    resultDiv.style.display = 'none';
+                }, 5000);
+            })
+            .catch(error => {
+                resultDiv.textContent = 'Lỗi: ' + error.message;
+                resultDiv.className = 'error';
+                resultDiv.style.display = 'block';
+            });
+    }
+</script>
+</body>
+</html>

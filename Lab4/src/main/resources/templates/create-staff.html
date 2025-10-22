@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Create Staff</title>
+    <link href="https://cdn.jsdelivr.net/npm/halfmoon@2.0.1/css/halfmoon.min.css" rel="stylesheet"/>
+    <style>i {
+        color: red
+    }</style>
+</head>
+
+<body class="dark-mode with-custom-webkit-scrollbars with-custom-css-scrollbars">
+<div class="page-wrapper with-navbar with-sidebar" data-sidebar-type="overlayed-sm-and-down">
+
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-center align-items-center py-4">
+
+                <div class="card" style="max-width: 600px; width: 100%;">
+                    <div class="card-body">
+
+                        <h2 class="card-title text-center mb-4">Create Staff</h2>
+
+                        <div class="alert alert-primary mb-3" th:if="${message}">
+                            <i style="color: aqua" th:text="${message}"></i>
+                        </div>
+
+                        <form action="/lab4/staff/create/save" enctype="multipart/form-data" method="post"
+                              th:object="${staff}">
+
+                            <div class="mb-3">
+                                <label class="form-label" for="id">Email:</label>
+                                <i th:errors="*{email}"></i>
+                                <input class="form-control" id="id" placeholder="example@mail.com" th:field="*{email}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="name">Họ và tên:</label>
+                                <i th:errors="*{name}"></i>
+                                <input class="form-control" id="name" placeholder="I am example" th:field="*{name}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Giới tính:</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="male" th:field="*{gender}" type="radio"
+                                           value="true">
+                                    <label class="form-check-label" for="male">Nam</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="female" th:field="*{gender}" type="radio"
+                                           value="false">
+                                    <label class="form-check-label" for="female">Nữ</label>
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="dob">Ngày sinh:</label>
+                                <i th:errors="*{dob}"></i>
+                                <input class="form-control" id="dob" th:field="*{dob}" type="date">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="photo_file">Hình ảnh:</label>
+                                <input th:field="*{photo}" type="hidden">
+                                <input class="form-control" id="photo_file" name="photo_file" type="file">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="level">Cấp bậc:</label>
+                                <select class="form-select" id="level" th:field="*{level}">
+                                    <option value="0">Úy</option>
+                                    <option value="1">Tá</option>
+                                    <option value="2">Tướng</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="salary">Salary:</label>
+                                <i th:errors="*{salary}"></i>
+                                <input class="form-control" id="salary" step="0.01" th:field="*{salary}">
+                            </div>
+
+                            <button class="btn btn-primary w-100" type="submit">Create</button>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/halfmoon@2.0.1/js/halfmoon.min.js"></script>
+</body>
+</html>
